@@ -8,7 +8,7 @@ def get_credentials():
         if ret.status_code == 200:
             return ret.json()
         return None
-    except ConnectTimeout:
+    except ConnectTimeout, ConnectionError:
         return None
 
 
