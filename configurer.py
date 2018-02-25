@@ -8,8 +8,19 @@ def get_credentials():
         if ret.status_code == 200:
             return ret.json()
         return None
-    except ConnectTimeout, ConnectionError:
+    except (ConnectTimeout, ConnectionError):
         return None
+
+
+def send_config():
+    payload = {
+      "version": 4,
+      "ssid": "NUITO",
+      "password": "xxxxxx",
+      "serverName": "192.168.1.41",
+      "port": "9001"
+    }
+    requests.post("http://10.10.7.1/ap", json=payload)
 
 
 if __name__ == "__main__":
@@ -26,7 +37,7 @@ if __name__ == "__main__":
     while True:
         credentials = get_credentials()
         if credentials:
-            break
+            send_config()
         else:
             print("Not connected...")
 
